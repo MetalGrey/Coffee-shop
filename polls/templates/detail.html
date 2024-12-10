@@ -1,0 +1,70 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модальное окно</title>
+    <style>
+        /* Стили для затемнения */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            background: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка для открытия модального окна -->
+    <button id="show-modal">Показать карточку</button>
+
+    <!-- Модальное окно -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <h2>Карточка</h2>
+            <p>Здесь отображается контент карточки.</p>
+            <button class="close-btn" id="close-modal">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        const modal_overlay = document.getElementById('modal-overlay');
+        const close_modal = document.getElementById('close-modal');
+        const show_modal = document.getElementById('show-modal');
+
+        // Показ модального окна
+        show_modal.addEventListener('click', () => {
+            modal_overlay.style.display = 'flex';
+        });
+
+        // Закрытие модального окна
+        close_modal.addEventListener('click', () => {
+            modal_overlay.style.display = 'none';
+        });
+    </script>
+</body>
+<h1>{{ assortment.assortment_name }}</h1>
+<ul>
+    {{assortment.assortment_description}}
+</ul>

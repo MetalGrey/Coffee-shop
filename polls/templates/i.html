@@ -1,0 +1,298 @@
+<style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }   
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 15px;
+            
+        }
+
+        .nav a:hover {
+            color: lightgray;
+        }
+        .nav a.active {
+            color: white; /* Белый цвет для активной ссылки */
+            font-weight: bold; /* Дополнительно можно сделать текст жирным */
+            border-bottom: 2px solid white; /* Подчеркнуть активную ссылку */
+        }
+
+        .hero-image {
+            position: relative;
+            height: 50vh;
+            background-image: url('https://th.bing.com/th/id/R.7804335c796f5cae41dbd3f5183bcadc?rik=cleG%2bYLOjLwGJQ&riu=http%3a%2f%2ffotodes.ru%2fupload%2fimg1345631020.jpg&ehk=%2bIgrsZ7EKKY5zfSnTznNP4cxDBGHnRGwba%2bHmgfge70%3d&risl=&pid=ImgRaw&r=0');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .parallax {
+            height: 50vh;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        .shopping-cart {
+          position: fixed; /* Фиксированное позиционирование */
+          top: 50%; /* Расположение по вертикали (по центру экрана) */
+          right: 20px; /* Отступ от правого края */
+          transform: translateY(-50%); /* Центрирование по вертикали */
+          background-color: white; /* Фон, если нужно */
+          border: 1px solid #ccc; /* Рамка */
+          border-radius: 10px; /* Скруглённые углы */
+          padding: 10px; /* Отступы внутри блока */
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для эффекта */
+          z-index: 1000; /* Расположить поверх других элементов */
+          cursor: pointer; /* Курсор при наведении */
+        }
+        .shopping-cart img {
+          width: 50px; /* Размер иконки */
+          height: 50px;
+          display: block;
+      }
+
+        .content {
+            padding: 50px 20px;
+            background-color: #f9f9f9;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px; 
+            right: 20px; 
+            z-index: 1050; 
+        }
+        .accordion { 
+            margin: 3%;
+            padding: 3%;
+        }
+
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column; /* Ссылки располагаются вертикально */
+                align-items: center; /* Центрирование ссылок */
+            }
+    
+            .nav a {
+                font-size: 0.9rem; /* Уменьшенный текст */
+                padding: 2px 0; /* Больше вертикальных отступов */
+            }
+        }
+    
+        /* --- Очень маленькие экраны (ширина меньше 480px) --- */
+        @media (max-width: 480px) {
+            .nav {
+                padding: 2px;
+            }
+    
+            .nav a {
+                font-size: 0.8rem; /* Ещё меньший текст */
+            }
+        }
+    </style>
+
+
+<body>
+<ul class="nav nav-underline" id="nav">
+    <li class="nav-item">
+        <a class="nav-link active text-white" aria-current="page" href="#">Active</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="#">Link</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+    </li>
+</ul>
+<div class="hero-image parallax"></div>
+<div class="content">
+    <h1>Добро пожаловать!</h1>
+    <p>Этот текст отображается после красивого изображения. Прокручивайте вниз, чтобы увидеть, как картинка исчезает.</p>
+    <p>Эффект реализован с использованием CSS и JavaScript.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Quisque a risus non nulla suscipit varius.</p>
+    <p>Продолжайте прокручивать!</p>
+    <!-- Кнопка для открытия модального окна -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Открыть модальное окно
+  </button>
+  
+  <!-- Модальное окно -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Модальное окно</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+            <form class="row g-3" method="post">
+                {% csrf_token %}
+                {% for field in form_order %}
+                <div class="col-12">
+                  {{ field.label_tag }}
+                  {{ field }}
+                  
+                </div>
+                {% endfor %}
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+{% if alert_message %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+        toastElList.forEach(function (toastEl) {
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        });
+    });
+</script>
+{% endif %}
+
+
+<div class="shopping-cart">
+  <img src="https://img.icons8.com/?size=100&id=43327&format=png&color=000000">
+</div>
+
+{% if latest_assortment_list %}
+    <div class="container">
+        <div class="row">
+            {% for assortment in latest_assortment_list %}
+                <div class="col-md-4 mb-4"> 
+                    <div class="card" style="width: 100%;"> 
+                        <img src={{ assortment.image.url }} class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ assortment.assortment_name }}</h5>
+                            <p class="card-text">{{ assortment.assortment_description }}</p>
+                            <a href="{%url "detail" assortment.id %}" class="btn btn-primary">{{assortment.price}}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <p>Error to load data</p>
+{% endif %}
+
+
+
+
+
+    <script>
+        const modal_overlay = document.getElementById('modal-overlay');
+        const close_modal = document.getElementById('close-modal');
+        const show_modal = document.getElementById('show-modal');
+
+        // Показ модального окна
+        show_modal.addEventListener('click', () => {
+            modal_overlay.style.display = 'flex';
+        });
+
+        // Закрытие модального окна
+        close_modal.addEventListener('click', () => {
+            modal_overlay.style.display = 'none';
+        });
+    </script>
+
+
+<div class="mb-3" style="max-width: 320px; margin: 0 auto; border: 1px solid #ddd; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+        </div>
+    </form>
+</div>
+
+
+{% if alert_message %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+        toastElList.forEach(function (toastEl) {
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        });
+    });
+</script>
+<div class="toast-container">
+<div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+       {{ alert_message }}
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+    {% endif %}
+
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Элемент аккордеона #1
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <strong>Это тело аккордеона первого элемента.</strong> Оно отображается по умолчанию, пока плагин свертывания не добавит соответствующие классы, которые мы используем для стилизации каждого элемента. Эти классы управляют общим внешним видом, а также отображением и скрытием с помощью переходов CSS. Вы можете изменить все это с помощью собственного CSS или переопределить наши переменные по умолчанию. Также стоит отметить, что практически любой HTML может быть помещен в <code>.accordion-body</code>, хотя переход ограничивает переполнение.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Элемент аккордеона #2
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <strong>Это тело аккордеона второго элемента.</strong> По умолчанию он скрыт, пока плагин свертывания не добавит соответствующие классы, которые мы используем для стилизации каждого элемента. Эти классы управляют общим внешним видом, а также отображением и скрытием с помощью переходов CSS. Вы можете изменить все это с помощью собственного CSS или переопределить наши переменные по умолчанию. Также стоит отметить, что практически любой HTML может быть помещен в <code>.accordion-body</code>, хотя переход ограничивает переполнение.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Элемент аккордеона #3
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <strong>Это тело аккордеона третьего элемента.</strong> По умолчанию оно скрыто, пока плагин свертывания не добавит соответствующие классы, которые мы используем для стилизации каждого элемента. Эти классы управляют общим внешним видом, а также отображением и скрытием с помощью переходов CSS. Вы можете изменить все это с помощью собственного CSS или переопределить наши переменные по умолчанию. Также стоит отметить, что практически любой HTML может быть помещен в <code>.accordion-body</code>, хотя переход ограничивает переполнение.
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>
