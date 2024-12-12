@@ -5,6 +5,16 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
+        h1 {
+            text-align: center;
+            }
+        .main-text { 
+            text-align: center;
+            font-size: 20px;
+        }
+        .assortment-content {
+            padding-top: 5%;
+        }
 
         .nav {
             position: fixed;
@@ -129,30 +139,23 @@
 </ul>
 <div class="hero-image parallax"></div>
 <div class="content">
-    <h1>Добро пожаловать!</h1>
-    <p>Этот текст отображается после красивого изображения. Прокручивайте вниз, чтобы увидеть, как картинка исчезает.</p>
-    <p>Эффект реализован с использованием CSS и JavaScript.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Quisque a risus non nulla suscipit varius.</p>
-    <p>Продолжайте прокручивать!</p> {{username}} 
-    <!-- Кнопка для открытия модального окна -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Открыть модальное окно
-  </button>
-<script> 
-  document.cookie = "username=JohnDoe; path=/; samesite=strict";
-  console.log("username=JohnDoe; path=/; samesite=strict")
-</script>
+    <h1>コーヒー専門のインターネットショップへようこそ！</h1>
+    <div class="main-text">
+    <p>私たちは、香り高いコーヒーの世界へようこそと言いたいと思います。私たちのショップでは、世界中から選びぬかれた高品質のコーヒー豆やブレンドをご用意しています。</p>
+    <p>私たちのショップでは、クラシックなアラビカやロブスタから、エキゾチックな種類やユニークなブレンドまで、さまざまなコーヒーをご用意しています。また、コーヒー豆は、挽いたもの、豆のまま、カプセルに入ったもの、缶詰のものなど、さまざまな形態でご用意しています。</p>
+    <p>私たちのチームは、コーヒー愛好家で構成されており、ご希望のコーヒーを選ぶ際にご支援いたします。また、全国への送料無料サービスもご用意しています。</p> 
+    </div>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Корзина и оформление заказа</h5>
+                <h5 class="modal-title" id="exampleModalLabel">カートと注文の確認</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
                 <!-- Вывод корзины -->
-                <h5>Корзина</h5>
+                <h5>カート</h5>
                 <div class="cart-items">
                   
                     {% if cart_items %}
@@ -161,26 +164,25 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6>{{ item.name }}</h6>
-                                        <p>Количество: {{ item.quantity }}</p>
-                                        <p>Цена за единицу: {{ item.price }} ¥</p>
+                                        <p>数量: {{ item.quantity }}</p>
+                                        <p>単位価格: {{ item.price }} ¥</p>
                                     </div>
                                     <div>
-                                        <p>Итого: {{ item.total }} ¥</p> <!-- Выводим итоговую стоимость -->
+                                        <p>合計: {{ item.total }} ¥</p> 
                                     </div>
                                 </li>
                             {% endfor %}
                         </ul>
-                        <p><strong>Общая сумма: {{ total_price }} ¥</strong></p>
+                        <p><strong>合計金額: {{ total_price }} ¥</strong></p>
                         <button type="button" class="btn btn-primary clean_cart" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Очистить корзину 
+                            カートを空にする 
                         </button>
                     {% else %}
-                        <p>Корзина пуста.</p>
+                        <p>カートは空です。</p>
                     {% endif %}
                 </div>
                 
-                <!-- Форма для оформления заказа -->
-                <h5>Оформление заказа</h5>
+                <h5>注文の確認</h5>
                 <form class="row g-3" method="post">
                     {% csrf_token %}
                     {% for field in form_order %}
@@ -189,13 +191,15 @@
                             {{ field }}
                         </div>
                     {% endfor %}
+                    {% if cart_items %}
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary w-100">Оформить заказ</button>
+                        <button type="submit" class="btn btn-primary w-100">注文を確定する</button>
                     </div>
+                    {% endif %}
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
             </div>
         </div>
     </div>
@@ -233,9 +237,11 @@
 
 
 <div class="shopping-cart">
-  <img src="https://img.icons8.com/?size=100&id=43327&format=png&color=000000">
+  <img src="https://img.icons8.com/?size=100&id=43327&format=png&color=000000"  class="btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal">
 </div>
 
+
+<div class="assortment-content">
 {% if latest_assortment_list %}
     <div class="container">
         <div class="row">
@@ -260,14 +266,16 @@
 {% else %}
     <p>Error loading data</p>
 {% endif %}
+</div>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-      // Получаем все кнопки добавления в корзину
+
       const buttons = document.querySelectorAll('.add-to-cart');
 
 
-      // Функция для получения корзины из cookies
+
       function getCart() {
         const cookie = document.cookie.split('; ').find(row => row.startsWith('cart='));
         if (cookie) {
@@ -277,7 +285,7 @@
                 return cart;
             } catch (error) {
                 console.error("Ошибка парсинга cookies:", error);
-                return { items: [] }; // Возвращаем пустую корзину в случае ошибки
+                return { items: [] };
             }
         }
         return { items: [] };
@@ -286,37 +294,36 @@
       const cart = getCart();
       console.log(cart.items);
 
-      // Функция для сохранения корзины в cookies
+      // cookies
       function saveCart(cart) {
           const expirationDate = new Date();
-          expirationDate.setDate(expirationDate.getDate() + 7); // Устанавливаем срок действия cookies на 7 дней
+          expirationDate.setDate(expirationDate.getDate() + 7); // cookies 7 
           document.cookie = `cart=${encodeURIComponent(JSON.stringify(cart))};path=/;expires=${expirationDate.toUTCString()}`;
       }
 
-      // Добавляем обработчик клика для каждой кнопки
+
       buttons.forEach(button => {
           button.addEventListener('click', () => {
               const id = parseInt(button.dataset.id, 10);
               const name = button.dataset.name;
               const price = parseFloat(button.dataset.price);
 
-              // Получаем текущую корзину
+
               const cart = getCart();
 
-              // Проверяем, есть ли товар уже в корзине
               const existingItem = cart.items.find(item => item.id === id);
 
               if (existingItem) {
-                  existingItem.quantity += 1; // Увеличиваем количество
+                  existingItem.quantity += 1;
               } else {
-                  // Добавляем новый товар в корзину
+
                   cart.items.push({ id, name, price, quantity: 1 });
               }
               
-              // Сохраняем корзину обратно в cookies
+  
               saveCart(cart);
-              // Уведомляем пользователя
-              alert(`Товар "${name}" добавлен в корзину!`);
+
+              //alert(`Товар "${name}" добавлен в корзину!`);
               location.reload();
           });
       });
@@ -333,12 +340,12 @@
         const close_modal = document.getElementById('close-modal');
         const show_modal = document.getElementById('show-modal');
 
-        // Показ модального окна
+
         show_modal.addEventListener('click', () => {
             modal_overlay.style.display = 'flex';
         });
 
-        // Закрытие модального окна
+
         close_modal.addEventListener('click', () => {
             modal_overlay.style.display = 'none';
         });
@@ -383,36 +390,36 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              Элемент аккордеона #1
+                Lorem ipsum #1
             </button>
           </h2>
           <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <strong>Это тело аккордеона первого элемента.</strong> Оно отображается по умолчанию, пока плагин свертывания не добавит соответствующие классы, которые мы используем для стилизации каждого элемента. Эти классы управляют общим внешним видом, а также отображением и скрытием с помощью переходов CSS. Вы можете изменить все это с помощью собственного CSS или переопределить наши переменные по умолчанию. Также стоит отметить, что практически любой HTML может быть помещен в <code>.accordion-body</code>, хотя переход ограничивает переполнение.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam sollicitudin nibh, vitae condimentum turpis tempus quis. Maecenas ut enim et risus scelerisque sodales. Etiam facilisis ante ut enim pulvinar, vitae condimentum augue iaculis. Morbi malesuada luctus urna, eu cursus leo condimentum id. Donec venenatis augue ex. Pellentesque sodales feugiat tellus.
             </div>
           </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              Элемент аккордеона #2
+                Lorem ipsum #2
             </button>
           </h2>
           <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <strong>Это тело аккордеона второго элемента.</strong> По умолчанию он скрыт, пока плагин свертывания не добавит соответствующие классы, которые мы используем для стилизации каждого элемента. Эти классы управляют общим внешним видом, а также отображением и скрытием с помощью переходов CSS. Вы можете изменить все это с помощью собственного CSS или переопределить наши переменные по умолчанию. Также стоит отметить, что практически любой HTML может быть помещен в <code>.accordion-body</code>, хотя переход ограничивает переполнение.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam sollicitudin nibh, vitae condimentum turpis tempus quis. Maecenas ut enim et risus scelerisque sodales. Etiam facilisis ante ut enim pulvinar, vitae condimentum augue iaculis. Morbi malesuada luctus urna, eu cursus leo condimentum id. Donec venenatis augue ex. Pellentesque sodales feugiat tellus.
             </div>
           </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              Элемент аккордеона #3
+                Lorem ipsum #3
             </button>
           </h2>
           <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <strong>Это тело аккордеона третьего элемента.</strong> По умолчанию оно скрыто, пока плагин свертывания не добавит соответствующие классы, которые мы используем для стилизации каждого элемента. Эти классы управляют общим внешним видом, а также отображением и скрытием с помощью переходов CSS. Вы можете изменить все это с помощью собственного CSS или переопределить наши переменные по умолчанию. Также стоит отметить, что практически любой HTML может быть помещен в <code>.accordion-body</code>, хотя переход ограничивает переполнение.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam sollicitudin nibh, vitae condimentum turpis tempus quis. Maecenas ut enim et risus scelerisque sodales. Etiam facilisis ante ut enim pulvinar, vitae condimentum augue iaculis. Morbi malesuada luctus urna, eu cursus leo condimentum id. Donec venenatis augue ex. Pellentesque sodales feugiat tellus.
             </div>
           </div>
         </div>

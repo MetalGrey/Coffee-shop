@@ -66,14 +66,6 @@ def index(request):
             except (ValueError, KeyError, Assortment.DoesNotExist):
                 pass
 
-            
-
-
-
-    username = request.COOKIES.get('username', 'default_value')
-    logger.debug("username: %s", username)
-
-
 
     
 
@@ -85,7 +77,6 @@ def index(request):
                "alert_message": alert_message,  
                 "cart_items": cart_items,
                "total_price": total_price,
-               "username": username,
                }
     return render(request, "index.html", context)
 
