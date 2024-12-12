@@ -10,8 +10,12 @@ import urllib.parse
 
 logger = logging.getLogger(__name__)
 
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
+
 def save_cart_to_cookies(response, cart_data):
-    response.set_cookie('cart', json.dumps(cart_data), max_age=7*24*60*60)  # 7 дней
+    response.set_cookie('cart', json.dumps(cart_data), max_age=7*24*60*60)  # 7 days
 
 def index(request):
 
