@@ -33,6 +33,7 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -55,7 +56,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'debug.log',  # Укажите путь к файлу для записи логов
+            'filename': 'debug.log',  
             'formatter': 'verbose',
         },
     },
@@ -65,14 +66,14 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-        'polls': {  # Замените на имя вашего приложения
+        'polls': {  
             'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': False,
         },
     },
 }
-
+"""
 
 # Application definition
 
