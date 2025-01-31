@@ -1,7 +1,18 @@
 from django.db import models
 
 class Assortment(models.Model):
+    
+    COFFEE = 'COFFEE'
+    TOOLS = 'TOOLS'
+    OTHER = 'OTHER'
+    PRODUCT_CHOICES = [
+        (COFFEE, 'Coffee'),
+        (TOOLS, 'Tools'),
+        (OTHER, 'Other'),
+    ]
+
     assortment_name = models.CharField(max_length=100)
+    type = models.CharField(max_length=20, choices=PRODUCT_CHOICES, default=COFFEE)
     assortment_description = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     image = models.ImageField(upload_to='products_images/', blank=True, null=True)

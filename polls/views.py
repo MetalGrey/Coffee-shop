@@ -40,8 +40,10 @@ def index(request):
         pass
 
 
-    latest_assortment_list = Assortment.objects.order_by("-pub_date")[:6]
-    
+    latest_assortment_list = Assortment.objects.filter(type=Assortment.COFFEE).order_by("-pub_date")[:6]
+    latest_assortment_tools_list = Assortment.objects.filter(type=Assortment.TOOLS).order_by("-pub_date")[:6]
+
+
     alert_message = None 
     form = EmailForm(request.POST) if request.method == 'POST' else EmailForm()
     form_order = OrderForm(request.POST) if request.method == 'POST' else OrderForm()
@@ -76,6 +78,7 @@ def index(request):
     logger.debug("Cart items: %s", cart_items)
     logger.debug("Total price: %s", total_price)
     context = {"latest_assortment_list": latest_assortment_list,
+               "latest_assortment_tools_list": latest_assortment_tools_list,
                "form": form,
                "form_order": form_order,
                "alert_message": alert_message,  

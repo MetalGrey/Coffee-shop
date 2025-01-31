@@ -1,4 +1,5 @@
-<html data-bs-theme="light">
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="light">
 <head>
     <style>
         body {
@@ -57,17 +58,17 @@
             background-position: center;
         }
         .shopping-cart {
-          position: fixed; /* Фиксированное позиционирование */
-          top: 50%; /* Расположение по вертикали (по центру экрана) */
-          right: 20px; /* Отступ от правого края */
-          transform: translateY(-50%); /* Центрирование по вертикали */
-          background-color: white; /* Фон, если нужно */
-          border: 1px solid #ccc; /* Рамка */
-          border-radius: 10px; /* Скруглённые углы */
-          padding: 10px; /* Отступы внутри блока */
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для эффекта */
-          z-index: 1000; /* Расположить поверх других элементов */
-          cursor: pointer; /* Курсор при наведении */
+          position: fixed; 
+          top: 50%;
+          right: 20px;
+          transform: translateY(-50%);
+          background-color: white;
+          border: 1px solid #ccc;
+          border-radius: 10px; 
+          padding: 10px; 
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+          z-index: 1000; 
+          cursor: pointer; 
         }
         .shopping-cart img {
           width: 50px; /* Размер иконки */
@@ -94,24 +95,24 @@
 
         @media (max-width: 768px) {
             .nav {
-                flex-direction: column; /* Ссылки располагаются вертикально */
-                align-items: center; /* Центрирование ссылок */
+                flex-direction: column; 
+                align-items: center; 
             }
     
             .nav a {
-                font-size: 0.9rem; /* Уменьшенный текст */
-                padding: 2px 0; /* Больше вертикальных отступов */
+                font-size: 0.9rem;
+                padding: 2px 0;
             }
         }
     
-        /* --- Очень маленькие экраны (ширина меньше 480px) --- */
+       
         @media (max-width: 480px) {
             .nav {
                 padding: 2px;
             }
     
             .nav a {
-                font-size: 0.8rem; /* Ещё меньший текст */
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -245,15 +246,16 @@
 {% if latest_assortment_list %}
     <div class="container">
         <div class="row">
+            <h2>Coffee</h2>
             {% for assortment in latest_assortment_list %}
                 <div class="col-md-4 mb-4"> 
                     <div class="card" style="width: 100%;"> 
                         <img src="{{ assortment.image.url }}" class="card-img-top" alt="{{ assortment.assortment_name }}">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{% url 'detail' assortment.id %}">
+                               <!--  <a href="{% url 'detail' assortment.id %}"> -->
                                     {{ assortment.assortment_name }}
-                                </a>
+                               <!--   </a> -->
                             </h5>
                             <p class="card-text">{{ assortment.assortment_description }}</p>
                             <p class="btn btn-primary add-to-cart" data-id="{{ assortment.id }}" data-name="{{ assortment.assortment_name}}" data-price="{{assortment.price}}">{{ assortment.price }} ¥</p>
@@ -267,6 +269,36 @@
     <p>Error loading data</p>
 {% endif %}
 </div>
+
+
+
+<div class="assortment-content">
+    {% if latest_assortment_tools_list %}
+        <div class="container">
+            <div class="row">
+                <h2>Tools</h2>
+                {% for assortment_tools in latest_assortment_tools_list %}
+                    <div class="col-md-4 mb-4"> 
+                        <div class="card" style="width: 100%;"> 
+                            <img src="{{ assortment_tools.image.url }}" class="card-img-top" alt="{{ assortment_tools.assortment_name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <!--<a href="{% url 'detail' assortment_tools.id %}">-->
+                                        {{ assortment_tools.assortment_name }}
+                                   <!-- </a>  -->
+                                </h5>
+                                <p class="card-text">{{ assortment_tools.assortment_description }}</p>
+                                <p class="btn btn-primary add-to-cart" data-id="{{ assortment_tools.id }}" data-name="{{ assortment_tools.assortment_name}}" data-price="{{assortment_tools.price}}">{{ assortment_tools.price }} ¥</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p>Error loading data</p>
+    {% endif %}
+    </div>
 
 
 <script>
